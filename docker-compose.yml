@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  backend:
+    build: ./backend
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - ADMIN_ACCESS_TOKEN
+      - ANTHROPIC_API_KEY
+      - STRIPE_SECRET_KEY
+      - STRIPE_PUBLISHABLE_KEY
+  frontend:
+    image: nginx:stable-alpine
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+    ports:
+      - "8080:80"

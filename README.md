@@ -1,5 +1,11 @@
-# Alison (Orion) — initial commit
+# Alison (Orion) — scaffold branch
 
-This repository will host the Alison voice assistant (product brand: Orion).
+This branch contains the initial scaffold for the Orion product / Alison assistant.
 
-This is an initial placeholder README so the repository has a default branch. The full scaffold (frontend, backend, Docker, and paywall scaffolding) will be pushed on a new branch `scaffold-app` shortly.
+Files:
+- backend/ (Express server with Stripe + admin paywall scaffolding)
+- frontend/ (static frontend to demo paywall & checkout)
+- docker-compose.yml
+- .env.example
+
+See README.md on main for deployment steps.

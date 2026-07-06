@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Alison (Orion) — Demo</title>
+    <style>body{font-family:Arial;margin:2rem}input,button{padding:0.5rem;margin:0.25rem}</style>
+  </head>
+  <body>
+    <h1>Alison (Orion) — Demo</h1>
+    <p>Enter email and choose: checkout (Stripe) or request a one-time free token from admin (demo).</p>
+    <div>
+      <input id="email" placeholder="you@example.com" />
+      <button id="checkout">Checkout (subscribe)</button>
+      <button id="test">Call /api/claude (requires access)</button>
+    </div>
+    <div id="out"></div>
+
+    <script>
+      const checkoutBtn = document.getElementById('checkout');
+      const testBtn = document.getElementById('test');
+      const out = document.getElementById('out');
+      checkoutBtn.onclick = async () => {
+        const email = document.getElementById('email').value;
+        if (!email) return alert('enter email');
+        const r = await fetch('/api/create-checkout-session', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email})});
+        const j = await r.json();
+        if (j.url) {
+          window.location = j.url;
+        } else {
+          out.innerText = JSON.stringify(j);
+        }
+      };
+
+      testBtn.onclick = async () => {
+        const email = document.getElementById('email').value;
+        const r = await fetch('/api/claude', {method:'POST', headers:{'Content-Type':'application/json', 'x-user-email': email}, body:JSON.stringify({prompt:'Say hi'})});
+        const j = await r.json();
+        out.innerText = JSON.stringify(j);
+      };
+    </script>
+  </body>
+</html>
